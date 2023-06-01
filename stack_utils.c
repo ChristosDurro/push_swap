@@ -6,93 +6,71 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:01:54 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/25 15:24:31 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:05:58 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"push_swap.h"
 
-int	stack_len(t_stack_node *stack)
-{
-	int	len;
 
-	len = 0;
-	while (stack)
-	{
-		len++;
-		stack = stack->next;
-	}
-	return (len);
-}
-
-int	get_node_pos(t_stack_node *stack, t_stack_node *target)
+int	get_node_pos(t_stack stack, int	target)
 {
 	int	i;
 
 	i = 0;
-	while (stack)
+	while (stack.stack)
 	{
-		if (stack == target)
+		if (stack.stack->data == target)
 			return (i);
 		i++;
+		stack.stack = stack.stack->next;
 	}
 	return(0);
 }
 
-t_stack_node *find_last_node(t_stack_node *head)
+
+t_stack_node *find_last_node(t_stack head)
 {
-	if (!head)
+	if (!head.size)
 		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
+	while (head.stack->next)
+		head.stack = head.stack->next;
+	return (head.stack);
 }
 
-void	append_node(t_stack_node **stack, int number, int position)
+void	append_node(t_stack *stack, int number, int position)
 {
 	t_stack_node *node;
-	t_stack_node *last_node;
 
-	if (!stack)
-		return ;
 	node = malloc(sizeof(t_stack_node));
-	if (!node)
+	if (node == NULL)
 		return ;
-	node->next = NULL;
 	node->data = number;
 	node->pos = position;
-	if (!(*stack))
-	{
-		*stack = node;
-		node->previous = NULL;
-	}
+	node->cost = 0;
+	node->previous = NULL;
+	node->next = NULL;
+	if (stack->size == 0)
+		stack->stack = node;
 	else
 	{
-		last_node = find_last_node(*stack);
-		last_node->previous = node;
-		node->next = last_node;
+		node->next = stack->stack;
+		stack->stack->previous = node;
+		stack->stack = node;
 	}
+	stack->size += 1;
+	
 }
 
-void	ft_initiailise(t_stack_node **stack, char **av, int ac)
+void	ft_initiailise(t_stack *stack, char **av, int ac)
 {
 	int i;
-	int len;
-
+	
 	i = 1;
-	while (i < ac)
+	stack->size = 0;
+	while (i <= ac)
 	{
-		append_node(stack, ft_atoi(av[i]), i);
+		append_node(stack, ft_atoi(av[ac - i + 1]), i - 1);
 		i++;
 	}
-	// i = 0;
-	// len = stack_len(*stack);
-	// while (stack)
-	// {
-	// 	if ((*stack)->pos > len / 2)
-	// 		(*stack)->above_mid = 1;
-	// 	else
-	// 		(*stack)->above_mid = 0;
-	// 	*stack = (*stack)->next;
-	// }
 }

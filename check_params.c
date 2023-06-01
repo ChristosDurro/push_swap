@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:46:29 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/24 16:37:23 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/05/25 16:44:12 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ int	check_digits(int ac, char **av)
 	while (i <= ac)
 	{
 		j = 0;
-		while (j < ft_strlen(av[i]))
+		while (av[i][j])
 		{
-			if (!ft_isdigit(av[i][j]))
+			if (!(ft_isdigit(av[i][j]) || av[i][j] == '-' || av[i][j] == '+'))
 				return (1);
+			if (av[i][j] == '-' || av[i][j] == '+')
+				if (av[i][j + 1] == '-' || av[i][j + 1] == '+')
+					return (1);
 			j++;
 		}
 		i++;

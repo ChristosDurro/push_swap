@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:02:10 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/25 13:27:56 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/01 17:14:56 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,178 +35,171 @@
 // }
 #include<limits.h>
 
-int	is_sorted(t_stack_node *stack)
+int	is_sorted(t_stack stack)
 {
-	int	i;
-
-	if (!stack)
+	if (!stack.size)
 		return (1);	
-	while (stack->next)
+	while (stack.stack->next != NULL)
 	{
-		if (stack->data > stack->next->data)
+		if (stack.stack->data > stack.stack->next->data)
 			return (0);
-		stack = stack->next;
+		stack.stack = stack.stack->next;
 	}
 	return (1);
 }
 
-t_stack_node	*smallest_node(t_stack_node *stack)
+int	smallest_data(t_stack stack)
 {
-	int				min;
-	t_stack_node	*min_node;
+	int	min;
 
 	min = INT_MAX;
-	while (stack)
+	while (stack.stack)
 	{
-		if (stack->data < min)
-		{
-			min = stack->data;
-			min_node = stack;
-		}
-		stack = stack->next;
+		if (stack.stack->data < min)
+			min = stack.stack->data;
+		stack.stack = stack.stack->next;
 	}
-	return (min_node);
+	return (min);
 }
 
-t_stack_node	*highest_node(t_stack_node *stack)
+int	highest_data(t_stack stack)
 {
 	int max;
-	t_stack_node	*max_node;
 
 	max = INT_MIN;
-	while (stack)
+	while (stack.stack)
 	{
-		if (stack->data > max)
-		{
-			max = stack->data;
-			max_node = stack;
-		}
-		stack = stack->next;
+		if (stack.stack->data > max)
+			max = stack.stack->data;
+		stack.stack = stack.stack->next;
 	}
-	return (max_node);
+	return (max);
 }
 
-void	tiny_sort(t_stack_node **stack)
+void	tiny_sort(t_stack *stack)
 {
-	t_stack_node	*highest;
-
-	highest = highest_node(*stack);
-	if (!(*stack))
+	int	highest;
+	
+	if (!stack->size)
 		return ;
+	highest = highest_data(*stack);
 	if (is_sorted(*stack))
 		return ;
-	if (*stack == highest)
-		ra(stack);
-	else if ((*stack)->next == highest)
-		rra(stack);
-	if ((*stack)->data > (*stack)->next->data)
-		sa(stack);
+	if (stack->stack->data == highest)
+		ra(stack, 1);
+	else if (stack->stack->next->data == highest)
+		rra(stack, 1);
+	if (stack->stack->data > stack->stack->next->data)
+		sa(stack, 1);
 }
-
-void	my_sort(t_stack_node **stack_a, t_stack_node **stack_b)
+// 3	6
+// 4		
+// 5
+// 9
+void	push_smallest(t_stack *stack_a, t_stack *stack_b)
 {
+	int	smallest;
 	int mid;
-	t_stack_node *highest;
-	t_stack_node *smallest;
+	int pos;
 
-	if (stack_b == NULL)
+	smallest = smallest_data(*stack_a);
+	mid = stack_a->size / 2;
+	pos = get_node_pos(*stack_a, smallest);
+
+	while (stack_a->stack->data != smallest)
 	{
-		push(stack_a, stack_b);
-		push(stack_a, stack_b);
-	}
-	while (stack_a)
-	{
-		highest = highest_node(*stack_b);
-		smallest = smallest_node(*stack_b);
-		if ((*stack_a)->data > highest->data)
-		{
-			while (*stack_b != highest)
-			{
-				if (highest->above_mid)
-					rb(stack_b);
-				else
-					rrb(stack_b);
-			}
-			pb(stack_a, stack_b);
-		}
-		else if ((*stack_a)->data < smallest->data)
-		{
-			while (*stack_b != smallest)
-			{
-				if (smallest->above_mid)
-					rb(stack_b);
-				else
-					rrb(stack_b);
-			}
-			pb(stack_a, stack_b);
-		}
-		else if ((*stack_a)->data < highest->data && (*stack_a)->data > smallest->data)
-		{
-			while ((*stack_a)->data < highest->next->data)
-			{
-				highest = highest->next;
-				rb(stack_b);
-			}
-			pb(stack_a, stack_b);
-		}
-		*stack_a = (*stack_a)->next;
-	}
-	highest = highest_node(*stack_b);
-	while(*stack_b != highest)
-	{
-		if (highest->above_mid)
-			rb(stack_b);
+		if (pos > mid)
+			rra(stack_a, 1);
 		else
-			rrb(stack_b);
+			ra(stack_a, 1);
 	}
-	while (stack_b)
-		pa(stack_b, stack_a);
+	pb(stack_a, stack_b);
 }
 
-// void	get_target_node(t_stack_node *stack_a, t_stack_node *stack_b)
-// {
-// 	t_stack_node	*current_a;	
-// 	t_stack_node	*target_node;
-// 	long			match_index;
+void	five_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	print_stack(*stack_a, 1);
 
-// 	while (stack_b)
-// 	{
-// 		match_index = 2147483647;
-// 		current_a = stack_a;
-// 		while (current_a)
-// 		{
-// 			if (current_a->data > stack_b->data && current_a->data < match_index)
-// 			{
-// 				match_index = current_a->data;
-// 				target_node = current_a;
-// 			}
-// 			current_a = current_a->next;
-// 		}
-// 		if (match_index == 2147483647)
-// 			target_node = smallest_node(stack_a);
-// 		else
-// 			stack_b->target_node = target_node;
-// 		stack_b = stack_b->next;
-// 	}
+	if (stack_a->size > 4)
+		push_smallest(stack_a, stack_b);
+	push_smallest(stack_a, stack_b);
 		
-// }
+	tiny_sort(stack_a);
 
-// void	set_cost(t_stack_node *stack_a, t_stack_node *stack_b)
-// {
-// 	int	len_a;
-// 	int	len_b;
+	while (stack_b->size)
+		pa(stack_b, stack_a);
+	update_index(*stack_a);
 
-// 	len_a = stack_len(stack_a);
-// 	len_b = stack_len(stack_b);
-// 	while (stack_b)
-// 	{
-// 		stack_b->push_price = stack_b->pos;
-// 		if (!(stack_b->above_mid))
-// 			stack_b->push_price = len_b - stack_b->pos;
-// 		if (stack_b->target_node->above_mid)
-// 			stack_b->push_price += stack_b->target_node->pos;
-// 		else
-// 			stack_b->push_price += len_a - stack_b->target_node->pos;
-// 		stack_b = stack_b->next;
-// 	}
-// }
+	print_stack(*stack_a, 1);
+}
+
+int min_size(t_stack stack_a, t_stack stack_b, int pos_a, int pos_b)
+{
+	if (stack_a.size < stack_b.size)
+		return (stack_a.size - pos_a - 1);
+	else
+		return (stack_b.size - pos_b - 1);
+}
+
+void	calculate_cost(t_stack stack_a, t_stack stack_b, int current_max, int current_min, int current_num)
+{
+	int i;
+	int pos_a;
+	int pos_b;
+	int size;
+
+	i = 0;
+
+	pos_a = get_node_pos(stack_a, current_num);
+	pos_b = get_node_pos(stack_b, current_max);
+
+	if (pos_a < stack_a.size - 1 && pos_b < stack_b.size - 1
+		&& pos_a >= stack_a.size / 2 && pos_b >= stack_b.size / 2)
+	{
+			size = min_size(stack_a, stack_b, pos_a, pos_b);
+			while (size--)
+			{
+				stack_a.stack->cost[i++] = 5;
+				pos_a++;
+				pos_b++;
+			}
+			while (pos_a != stack_a.size - 1)
+			{
+				stack_a.stack->cost[i++] = 5;
+				pos_a++;
+			}
+			while (pos_b != stack_b.size - 1)
+			{
+				stack_a.stack->cost[i++] = 5;
+				pos_b++;
+			}
+			
+	}
+
+
+	int i = 0;
+	while (stack_a.stack->cost[i])
+	{
+		printf("command: %i", stack_a.stack->cost[i]);
+		i++;
+	}
+
+}
+
+void	big_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	int max;
+	int	min;
+
+	pb(stack_a, stack_b);
+	pb(stack_a, stack_b);
+
+	// do while till 3 numbers are left in stack a
+	// while (stack_a->size > 3)
+	// {
+		max = highest_data(*stack_b);
+		min = smallest_data(*stack_b);
+		calculate_cost(*stack_a, *stack_b, max, min, stack_a->stack->data);
+	// }
+
+}

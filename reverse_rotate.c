@@ -6,41 +6,46 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:30:10 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/25 13:23:31 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/05/31 18:46:49 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"push_swap.h"
 
-void	r_rotate(t_stack_node **stack)
+void	r_rotate(t_stack stack)
 {
 	t_stack_node  *last;
-
-	if (!(*stack))
+	int tmp;
+	
+	if (!stack.size)
 		return ;
-	last = find_last_node(*stack);
-	(*stack)->previous = last;
-	last->next = *stack;
-	last->previous = NULL;
-	*stack = (*stack)->next;
-	(*stack)->next = NULL;
+	last = find_last_node(stack);
+	tmp = last->data;
+	while (last->previous)
+	{
+		last->data = last->previous->data;
+		last = last->previous; 
+	}
+	last->data = tmp;
 }
 
-void	rra(t_stack_node **stack_a)
+void	rra(t_stack *stack_a, int bool)
 {
-	r_rotate(stack_a);
-	ft_printf("rra\n");
+	r_rotate(*stack_a);
+	if (bool)
+		ft_printf("rra\n");
 }
 
-void	rrb(t_stack_node **stack_b)
+void	rrb(t_stack *stack_b, int bool)
 {
-	r_rotate(stack_b);
-	ft_printf("rrb\n");
+	r_rotate(*stack_b);
+	if (bool)
+		ft_printf("rrb\n");
 }
 
-void	rrr(t_stack_node **stack_a, t_stack_node **stack_b)
+void	rrr(t_stack *stack_a, t_stack *stack_b, int bool)
 {
-	rra(stack_a);
-	rrb(stack_b);
-	// ft_printf("rrr\n");
+	rra(stack_a , 0);
+	rrb(stack_b, 0);
+	ft_printf("rrr\n");
 }
