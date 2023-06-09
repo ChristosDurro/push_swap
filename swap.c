@@ -6,17 +6,16 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:02:31 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/01 11:07:37 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/08 16:07:16 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"push_swap.h"
 
-
 void	swap(t_stack *head)
 {
 	int	tmp;
-	
+
 	if (!head->size)
 		return ;
 	tmp = head->stack->data;

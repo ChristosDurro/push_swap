@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:59:49 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/31 18:46:40 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/08 16:01:14 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	rotate(t_stack stack)
 {
-	t_stack_node *last;
-	int tmp;
-	
+	t_stack_node	*last;
+	int				tmp;
+
 	if (!stack.size)
 		return ;
 	tmp = stack.stack->data;
@@ -26,13 +26,6 @@ void	rotate(t_stack stack)
 		stack.stack = stack.stack->next;
 	}
 	stack.stack->data = tmp;
-	// last = find_last_node(*stack);
-
-	// last->next = stack->stack;
-	// stack->stack = stack->stack->next;
-	// stack->stack->previous = NULL;
-	// last->next->previous = last;
-	// last->next->next = NULL;	
 }
 
 void	ra(t_stack *stack_a, int bool)

@@ -6,74 +6,48 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:19:43 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/01 13:59:07 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/09 14:29:20 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include"push_swap.h"
-#include"libft/libft.h"
-#include"ft_printf/ft_printf.h"
+#include "push_swap.h"
 
-
-void	print_stack(t_stack stack, int bool)
+void	call_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	printf("\n");
-	while (stack.size--)
-	{
-		printf(" %i\t-> index", stack.stack->data);
-		printf(" %i\n", stack.stack->pos);
-		stack.stack = stack.stack->next;
-	}
-	ft_printf("---\n");
-	if (bool)
-		ft_printf(" a\n");
+	if (stack_a->size <= 3)
+		tiny_sort(stack_a);
+	else if (stack_a->size <= 5)
+		five_sort(stack_a, stack_b);
 	else
-		ft_printf(" b\n");
-	printf("\n");
-
+	{
+		pb(stack_a, stack_b);
+		pb(stack_a, stack_b);
+		big_sort(stack_a, stack_b);
+	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_stack a;
-	t_stack b;
-	int		i;
+	t_stack	a;
+	t_stack	b;
+	int		start;
 
+	start = 1;
 	if (argc == 1 || !argv[1][0])
 		return (1);
 	if (argc == 2)
 	{
 		argv = ft_split(argv[1], ' ');
 		argc = count_args(argv);
+		start = 0;
 	}
 	if (check_params(argc - 1, argv))
 	{
 		ft_printf("Error!\n");
 		return (0);
 	}
-	ft_initiailise(&a, argv, argc - 1);
-	ft_initiailise(&b, argv, 0);
-
-	print_stack(a, 1);
-	// printf("biggest pos: %i\n", get_node_pos(a, highest_node(a)));
-	// r_rotate(a);
-	// printf("biggest pos after rotate: %i\n", get_node_pos(a, highest_node(a)));
-	// tiny_sort(&a);
-	// five_sort(&a, &b);
-	big_sort(&a, &b);
-	// print_stack(a, 1);
-	// print_stack(b, 0);
-	// my_sort(&a, &b);
-	//print_stack(&b, 0);
-	// while (a)
-	// {
-	// 	printf(" %i\n", a->data);
-	// 	a = a->next;
-
-
-	// }
-
+	ft_initiailise(&a, argv, argc, start);
+	ft_initiailise(&b, argv, 0, start);
+	call_sort(&a, &b);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:46:29 by cdurro            #+#    #+#             */
-/*   Updated: 2023/05/25 16:44:12 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/08 15:54:35 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_limit(int ac, char **av)
 	int	i;
 
 	i = 1;
-	while (av[i])
+	while (i < ac - 1)
 	{
 		if (ft_atol(av[i]) > 2147483647 || ft_atol(av[i]) < -2147483648)
 			return (1);
@@ -76,7 +76,7 @@ int	check_limit(int ac, char **av)
 	return (0);
 }
 
-int count_args(char **av)
+int	count_args(char **av)
 {
 	int	i;
 
