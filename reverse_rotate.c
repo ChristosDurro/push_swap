@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:30:10 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/08 16:04:42 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/09 15:03:40 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	rrb(t_stack *stack_b, int bool)
 		ft_printf("rrb\n");
 }
 
-void	rrr(t_stack *stack_a, t_stack *stack_b, int bool)
+void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	rra(stack_a, 0);
 	rrb(stack_b, 0);

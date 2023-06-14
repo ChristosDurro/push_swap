@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:55:31 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/09 14:22:34 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:41:31 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include<stdio.h>
 # include<stdlib.h>
 # include<limits.h>
-# include"libft/libft.h"
-# include"ft_printf/ft_printf.h"
+# include"lib/libft.h"
+# include"lib/ft_printf.h"
 
 # define SA 0
 # define SB 1
@@ -50,18 +50,19 @@ typedef struct s_operations
 {
 	int	ra;
 	int	rb;
+	int	rr;
 	int	rra;
 	int	rrb;
+	int	rrr;
 }		t_operations;
 
-int				check_params(int ac, char **av);
-int				check_digits(int ac, char **av);
-int				check_dupes(int ac, char **av);
-int				check_limit(int ac, char **av);
+int				check_params(int ac, char **av, int start);
+int				check_digits(int ac, char **av, int start);
+int				check_dupes(int ac, char **av, int start);
+int				check_limit(int ac, char **av, int start);
 int				count_args(char **av);
 int				get_node_pos(t_stack stack, int target);
 int				list_len(int *list);
-int				ft_abs(int num);
 int				is_sorted(t_stack stack);
 
 void			push(t_stack *src, t_stack *dest);
@@ -70,14 +71,15 @@ void			pb(t_stack *src, t_stack *dest);
 void			rotate(t_stack stack);
 void			ra(t_stack *stack_a, int bool);
 void			rb(t_stack *stack_b, int bool);
-void			rr(t_stack *stack_a, t_stack *stack_b, int bool);
+void			rr(t_stack *stack_a, t_stack *stack_b);
 void			r_rotate(t_stack stack);
 void			rra(t_stack *stack_a, int bool);
 void			rrb(t_stack *stack_b, int bool);
-void			rrr(t_stack *stack_a, t_stack *stack_b, int bool);
+void			rrr(t_stack *stack_a, t_stack *stack_b);
 void			swap(t_stack *stack);
 void			sa(t_stack *stack_a, int bool);
 void			sb(t_stack *stack_b, int bool);
+void			ss(t_stack *stack_a, t_stack *stack_b);
 void			ft_initiailise(t_stack *stack, char **av, int ac, int start);
 void			print_stack(t_stack stack, int bool);
 void			update_index(t_stack stack_a, t_stack stack_b);
@@ -98,8 +100,7 @@ void			call_sort(t_stack *stack_a, t_stack *stack_b);
 void			calculate_stack_a(t_stack *stack_a, int i,
 					int *j, t_stack_node *num);
 void			calculate_stack_b(t_stack *stack_b, int *j, t_stack_node *num);
-void			check_rr(t_operations *commands, int *list, int *i);
-void			check_rrr(t_operations *commands, int *list, int *i);
+void			check_rr_rrr(t_operations *commands, int *list, int *i);
 void			check_ra_rra(t_operations *commands, int *list, int *i);
 void			check_rb_rrb(t_operations *commands, int *list, int *i);
 

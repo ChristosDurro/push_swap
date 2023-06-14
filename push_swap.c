@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:19:43 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/09 14:29:20 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/13 16:57:15 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@ void	call_sort(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
+
+void	free_all(t_stack stack)
+{
+	while (stack.stack->next)
+	{
+		stack.stack = stack.stack->next;
+		free(stack.stack->previous);
+	}
+	free(stack.stack);
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack	a;
@@ -41,13 +52,17 @@ int	main(int argc, char **argv)
 		argc = count_args(argv);
 		start = 0;
 	}
-	if (check_params(argc - 1, argv))
+	if (check_params(argc - 1, argv, start))
 	{
 		ft_printf("Error!\n");
 		return (0);
 	}
 	ft_initiailise(&a, argv, argc, start);
 	ft_initiailise(&b, argv, 0, start);
+	if (is_sorted(a))
+		return (0);
 	call_sort(&a, &b);
+	// print_stack(a, 1);
+	free_all(a);
 	return (0);
 }

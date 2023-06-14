@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:57:07 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/09 13:23:45 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/09 15:05:12 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	execute_commands(int *list, t_stack *stack_a, t_stack *stack_b)
 		else if (list[i] == RRB)
 			rrb(stack_b, 1);
 		else if (list[i] == RR)
-			rr(stack_a, stack_b, 1);
+			rr(stack_a, stack_b);
 		else if (list[i] == RRR)
-			rrr(stack_a, stack_b, 1);
+			rrr(stack_a, stack_b);
 		else if (list[i] == PB)
 			pb(stack_a, stack_b);
 		i++;
@@ -88,11 +88,4 @@ int	is_sorted(t_stack stack)
 		stack.stack = stack.stack->next;
 	}
 	return (1);
-}
-
-int	ft_abs(int num)
-{
-	if (num < 0)
-		return (num * -1);
-	return (num);
 }

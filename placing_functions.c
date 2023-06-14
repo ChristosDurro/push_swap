@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:58:43 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/08 15:59:10 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/09 14:48:50 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	place_new_max(t_stack stack_b, int *list, int index)
 
 	max = highest(stack_b);
 	i = max->pos;
-	if (ft_abs(stack_b.size - 1 - max->pos) <= max->pos + 1)
+	if (i > stack_b.size / 2)
 	{
 		while (i++ < stack_b.size - 1)
 			list[index++] = RB;

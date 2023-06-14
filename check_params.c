@@ -6,25 +6,25 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:46:29 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/08 15:54:35 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/13 16:10:09 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"push_swap.h"
 
-int	check_params(int ac, char **av)
+int	check_params(int ac, char **av, int start)
 {
-	if (check_digits(ac, av) || check_dupes(ac, av) || check_limit(ac, av))
+	if (check_digits(ac, av, start) || check_dupes(ac, av, start) || check_limit(ac, av, start))
 		return (1);
 	return (0);
 }
 
-int	check_digits(int ac, char **av)
+int	check_digits(int ac, char **av, int start)
 {
 	int	i;
 	int	j;
 
-	i = 1;
+	i = start;
 	while (i <= ac)
 	{
 		j = 0;
@@ -42,12 +42,12 @@ int	check_digits(int ac, char **av)
 	return (0);
 }
 
-int	check_dupes(int ac, char **av)
+int	check_dupes(int ac, char **av, int start)
 {
 	int	i;
 	int	j;
 
-	i = 1;
+	i = start;
 	while (i < ac)
 	{
 		j = i + 1;
@@ -62,11 +62,11 @@ int	check_dupes(int ac, char **av)
 	return (0);
 }
 
-int	check_limit(int ac, char **av)
+int	check_limit(int ac, char **av, int start)
 {
 	int	i;
 
-	i = 1;
+	i = start;
 	while (i < ac - 1)
 	{
 		if (ft_atol(av[i]) > 2147483647 || ft_atol(av[i]) < -2147483648)

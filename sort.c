@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:02:10 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/09 14:29:17 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/13 16:55:47 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	five_sort(t_stack *stack_a, t_stack *stack_b)
 	update_index(*stack_a, *stack_b);
 }
 
+
 void	big_sort(t_stack *stack_a, t_stack *stack_b)
 {
 	t_stack_node	*num;
@@ -71,21 +72,24 @@ void	big_sort(t_stack *stack_a, t_stack *stack_b)
 
 	while (stack_a->size)
 	{
-		best = ft_calloc(1024, sizeof(int));
+		best = ft_calloc(stack_a->size + stack_b->size + 1, sizeof(int));
 		if (!best)
 			return ;
 		i = -1;
 		while (++i < stack_a->size)
 		{
 			num = get_num(*stack_a, i);
-			num->cost = ft_calloc(1024, sizeof(int));
+			num->cost = ft_calloc(stack_a->size + stack_b->size + 1, sizeof(int));
 			j = 0;
 			calculate_stack_a(stack_a, i, &j, num);
 			calculate_stack_b(stack_b, &j, num);
 			update_list(num->cost);
 			check_best(num->cost, best);
+			free(num->cost);
 		}
 		execute_commands(best, stack_a, stack_b);
 	}
 	rotate_max_on_top_and_push(stack_a, stack_b);
+	// free_all(stack_a);
+
 }

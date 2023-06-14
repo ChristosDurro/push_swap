@@ -6,7 +6,7 @@
 /*   By: cdurro <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:59:49 by cdurro            #+#    #+#             */
-/*   Updated: 2023/06/08 16:01:14 by cdurro           ###   ########.fr       */
+/*   Updated: 2023/06/09 15:04:16 by cdurro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	rotate(t_stack stack)
 {
-	t_stack_node	*last;
 	int				tmp;
 
 	if (!stack.size)
@@ -42,7 +41,7 @@ void	rb(t_stack *stack_b, int bool)
 		ft_printf("rb\n");
 }
 
-void	rr(t_stack *stack_a, t_stack *stack_b, int bool)
+void	rr(t_stack *stack_a, t_stack *stack_b)
 {
 	ra(stack_a, 0);
 	rb(stack_b, 0);
